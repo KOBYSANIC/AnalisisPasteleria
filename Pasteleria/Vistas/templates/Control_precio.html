@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Precios</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/Precios.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/Menu.css">
+</head>
+<body>
+    {% include 'menu.html' %}
+    <center><h1>Control Precio</h1></center>
+    <table class="rounded-table">
+        <thead>
+            <tr>
+                <th>ID Pastel</th>
+                <th>Nombre</th>
+                <th>Porciones</th>
+                <th>Familia</th>
+                <th>Descripcion</th>
+                <th>Ingredientes</th>
+                <th>Precio</th>
+                <th>Hora Creado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for control in Precio_content %}
+            <tr>
+                <td>{{ control.0 }}</td>
+                <td>{{ control.1 }}</td>
+                <td>{{ control.2 }}</td>
+                <td>{{ control.3 }}</td>
+                <td>{{ control.4 }}</td>
+                <td>{{ control.5 }}</td>
+                <td>{{ control.6 }}</td>
+                <td>{{ control.7 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <center>
+        <button class="pastel-button" id="pastel-button">Crear Pastel</button>
+        <form method="post" action="/aplicar_rebaja/">
+            {% csrf_token %}
+            <button type="submit" class="rebaja-button" id="rebaja-button">Aplicar Rebaja de Precio</button>
+        </form>
+    </center>
+    <div id="pastel-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="cerrar-pastel-form">&times;</span>
+            <form id="pastel-form" class="formulario" method="post" action="/cocinar_pastel/">
+                {% csrf_token %}
+
+                <label for="ID_Pastel">ID Pastel:</label>
+                <input type="number" class="ID_Pastel" name="ID_Pastel" id="ID_Pastel" placeholder="ID Pastel" required>
+
+                <label for="nombre">Nombre:</label>
+                <input type="text" class="nombre" name="nombre" id="nombre" placeholder="Nombre" required>
+
+                <label for="porciones">Porciones:</label>
+                <input type="text" class="porciones" name="porciones" id="porciones" placeholder="Porciones" required>
+
+                <label for="familia">Familia:</label>
+                <select name="familia" id="familia" class="familia" required>
+                    <option value="Horneado">Horneado</option>
+                    <option value="Frio">Frio</option>
+                    <option value="Yogurt">Yogurt</option>
+                </select>
+
+                <label for="descripcion">Descripcion:</label>
+                <input type="text" class="descripcion" name="descripcion" id="descripcion" placeholder="Descripcion" required>
+                
+                <label for="ingredientes">Ingredientes:</label>
+                <input type="text" class="ingredientes" name="ingredientes" id="ingredientes" placeholder="Ingredientes" required>
+
+                <label for="precio">Precio:</label>
+                <input type="number" class="precio" name="precio" id="precio" placeholder="Precio" required>
+                
+                <button type="submit" class="pastel-button">Hornear</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        // Muestra la ventana modal cuando se hace clic en "PEDIR"
+        document.getElementById("pastel-button").addEventListener("click", function() {
+            var modal = document.getElementById("pastel-modal");
+            modal.style.display = "flex";
+        });
+
+        // Cierra la ventana modal cuando se hace clic en la "x" o fuera del contenido
+        document.getElementById("cerrar-pastel-form").addEventListener("click", function() {
+            var modal = document.getElementById("pastel-modal");
+            modal.style.display = "none";
+        });
+
+        document.getElementById("pastel-modal").addEventListener("click", function(e) {
+            if (e.target === this) {
+                this.style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html>

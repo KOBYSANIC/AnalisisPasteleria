@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pedidos</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/Pedidos.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/Menu.css">
+</head>
+<body>
+    {% include 'menu.html' %}
+    <center><h1>Pedidos</h1></center>
+    <table class="rounded-table">
+        <thead>
+            <tr>
+                <th>ID Cliente</th>
+                <th>Nombre</th>
+                <th>Dirección</th>
+                <th>Teléfono</th>
+                <th>Tipo Cliente</th>
+                <th>Saldo</th>
+                <th>Fecha de Cobro</th>
+                <th>ID Pastel</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pedido in Pedidos_content %}
+            <tr>
+                <td>{{ pedido.0 }}</td>
+                <td>{{ pedido.1 }}</td>
+                <td>{{ pedido.2 }}</td>
+                <td>{{ pedido.3 }}</td>
+                <td>{{ pedido.4 }}</td>
+                <td>{{ pedido.5 }}</td>
+                <td>{{ pedido.6 }}</td>
+                <td>{{ pedido.7 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Catálogo de Pasteles</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/Menu.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/Catalogo.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    {% include 'menu.html' %}
+
+    <center><h1>Catálogo de pasteles</h1></center>
+    <div class="search-button">
+        <button id="toggle-search"><img src="/static/img/Lupa.png" height ="20" width="20" /><i class="fas fa-search"></i></button>
+        <div class="search-bar" style="display: none;">
+            <input type="text" id="search-input" placeholder="Buscar pasteles...">
+            <button id="search-button">Buscar<i class="fas fa-search"></i></button>
+            <button id="close-search"><img src="/static/img/Cerrar.png" height ="10" width="10" /><i class="fas fa-times"></i></button>
+        </div>
+    </div>
+
+    <div class="familia-buttons">
+        {% for familia in familias %}
+            <button class="btn familia-button" data-familia="{{ familia }}">{{ familia }}</button>
+        {% endfor %}
+    </div>
+
+    <div class="pasteles-container">
+        {% for pastel in pasteles %}
+            <div class="pastel" data-familia="{{ pastel.Familia }}">
+                <h3>{{ pastel.Nombre }}</h3>
+                <img src="{{ pastel.Imagen_URL }}" alt="{{ pastel.Nombre }}">
+                <h3>{{ pastel.Precio }}</h3>
+                <button class="descripcion-button" data-pastel="{{ pastel.ID_Pastel }}">Solicitar Descripción</button>
+                <button class="ingredientes-button" data-pastel="{{ pastel.ID_Pastel }}">Ingredientes</button>
+            </div>
+        {% endfor %}
+        <div id="descripcion-container" style="display: none;">
+            <div id="descripcion-box">
+                <p id="descripcion-text"></p>
+                <center><button id="cerrar-descripcion">Cerrar</button></center>
+            </div>
+        </div>
+        <div id="ingredientes-container" style="display: none;">
+            <div id="ingredientes-box">
+                <p id="ingredientes-text"></p>
+                <center><button id="cerrar-ingredientes">Cerrar</button></center>
+            </div>
+        </div>
+    </div>
+
+    <center>
+        <button class="pedido-button" id="pedido-button">PEDIR</button>
+    </center>
+    <div id="pedido-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="cerrar-pedido-form">&times;</span>
+            <form id="pedido-form" class="formulario" method="post" action="/procesar_pedido/">
+                {% csrf_token %}
+                <label for="nombre">Nombre:</label>
+                <input type="text" class="nombre" name="nombre" id="nombre" placeholder="Nombre" required>
+
+                <label for="direccion">Dirección:</label>
+                <input type="text" class="direccion" name="direccion" id="direccion" placeholder="Dirección" required>
+
+                <label for="telefono">Teléfono:</label>
+                <input type="text" class="telefono" name="telefono" id="telefono" placeholder="Teléfono" required>
+
+                <label for="tipo_pago">Tipo de pago:</label>
+                <select name="tipo_pago" id="tipo_pago" class="tipo_pago" required>
+                    <option value="Credito">Crédito</option>
+                    <option value="Contado">Contado</option>
+                </select>
+
+                <label for="Saldo">Saldo:</label>
+                <input type="number" class="saldo" name="saldo" id="saldo" placeholder="saldo" required>
+
+                <label for="pastel_id">Seleccione un pastel:</label>
+                <select name="pastel_id" id="pastel_id" class="pastel_id" required>
+                    <option value="" selected>Seleccione un pastel</option>
+                    {% for pastel in pasteles %}
+                        <option value="{{ pastel.ID_Pastel }}" data-pastel-nombre="{{ pastel.Nombre }}">{{ pastel.ID_Pastel }} - {{ pastel.Nombre }}</option>
+                    {% endfor %}
+                </select>
+                
+                <button type="submit" class="pedido-button">Enviar Pedido</button>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        $(document).ready(function() {
+            $(".familia-button").on("click", function() {
+                var familiaSeleccionada = $(this).data("familia");
+                if (familiaSeleccionada === "todos") {
+                    $(".pastel").show();
+                } else {
+                    $(".pastel").hide();
+                    $(".pastel[data-familia='" + familiaSeleccionada + "']").show();
+                }
+            });
+
+            // Agregar la funcionalidad de búsqueda
+            $("#toggle-search").on("click", function() {
+                $(".familia-buttons").hide(); // Ocultar botones de familia
+                $(".search-bar").toggle(); // Muestra u oculta la barra de búsqueda
+                $(".search-bar input").focus(); // Coloca el foco en el campo de búsqueda
+            });
+
+            $("#search-button").on("click", function() {
+                var searchTerm = $("#search-input").val().toLowerCase();
+                $(".pastel").hide();
+
+                $(".pastel").each(function() {
+                    var descripcion = $(this).text().toLowerCase();
+                    if (descripcion.indexOf(searchTerm) !== -1) {
+                        $(this).show();
+                    }
+                });
+            });
+
+            $("#close-search").on("click", function() {
+                $(".search-bar").hide(); // Oculta la barra de búsqueda
+                $(".familia-buttons").show(); // Muestra los botones de familia
+                $(".pastel").show(); // Muestra todos los pasteles
+                $("#search-input").val(""); // Borra el contenido del campo de búsqueda
+            });
+        });
+
+        
+        $(document).ready(function() {
+        $(".descripcion-button").on("click", function() {
+            var pastelID = $(this).data("pastel");
+
+            $.ajax({
+                url: "{% url 'obtener_descripcion_pastel' %}",
+                method: "GET",
+                data: { pastel_id: pastelID },
+                success: function(data) {
+                    if (data.descripcion) {
+                        // Llena el div de descripción y muestra el contenedor
+                        $("#descripcion-text").text(data.descripcion);
+                        $("#descripcion-container").show();
+                    } else {
+                        // Maneja el caso en el que no se encuentra una descripción
+                        // Puedes mostrar un mensaje de error en lugar de ocultar el contenedor
+                        $("#descripcion-text").text("Descripción no encontrada");
+                        $("#descripcion-container").show();
+                    }
+                }
+            });
+        });
+
+        $("#cerrar-descripcion").on("click", function() {
+            // Oculta el contenedor cuando se hace clic en el botón "Cerrar"
+            $("#descripcion-container").hide();
+        });
+    });
+
+    $(document).ready(function() {
+        $(".ingredientes-button").on("click", function() {
+            var pastelID = $(this).data("pastel");
+
+            $.ajax({
+                url: "{% url 'obtener_ingredientes_pastel' %}",
+                method: "GET",
+                data: { pastel_id: pastelID },
+                success: function(data) {
+                    if (data.ingredientes) {
+                        // Llena el div de descripción y muestra el contenedor
+                        $("#ingredientes-text").text(data.ingredientes);
+                        $("#ingredientes-container").show();
+                    } else {
+                        // Maneja el caso en el que no se encuentra una descripción
+                        // Puedes mostrar un mensaje de error en lugar de ocultar el contenedor
+                        $("#ingredientes-text").text("Ingredientes no encontrados");
+                        $("#ingredientes-container").show();
+                    }
+                }
+            });
+        });
+
+        $("#cerrar-ingredientes").on("click", function() {
+            // Oculta el contenedor cuando se hace clic en el botón "Cerrar"
+            $("#ingredientes-container").hide();
+        });
+    });
+
+
+        // Muestra la ventana modal cuando se hace clic en "PEDIR"
+        document.getElementById("pedido-button").addEventListener("click", function() {
+            var modal = document.getElementById("pedido-modal");
+            modal.style.display = "flex";
+        });
+
+        // Cierra la ventana modal cuando se hace clic en la "x" o fuera del contenido
+        document.getElementById("cerrar-pedido-form").addEventListener("click", function() {
+            var modal = document.getElementById("pedido-modal");
+            modal.style.display = "none";
+        });
+
+        document.getElementById("pedido-modal").addEventListener("click", function(e) {
+            if (e.target === this) {
+                this.style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html>

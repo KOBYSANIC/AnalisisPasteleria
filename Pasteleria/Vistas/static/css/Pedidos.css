@@ -1,0 +1,23 @@
+.rounded-table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .rounded-table th, .rounded-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ccc; /* Add borders */
+    border-radius: 8px; /* Rounded corners */
+  }
+  
+  .rounded-table th {
+    background-color: #f2f2f2; /* Header background color */
+  }
+
+  .rounded-table tr:nth-child(even) {
+    background-color: #f2f2f2; /* Alternate row color */
+  }
+  
+  .rounded-table tr:hover {
+    background-color: #e0e0e0; /* Hover effect */
+  }

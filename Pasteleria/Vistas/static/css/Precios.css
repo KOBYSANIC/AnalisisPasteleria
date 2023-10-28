@@ -1,0 +1,106 @@
+.rounded-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.rounded-table th, .rounded-table td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ccc; /* Add borders */
+  border-radius: 8px; /* Rounded corners */
+}
+
+.rounded-table th {
+  background-color: #f2f2f2; /* Header background color */
+}
+
+.rounded-table tr:nth-child(even) {
+  background-color: #f2f2f2; /* Alternate row color */
+}
+
+.rounded-table tr:hover {
+  background-color: #e0e0e0; /* Hover effect */
+}
+
+  /* Estilos personalizados para los botones */
+#pastel-button {
+  padding: 10px 20px; /* Ajusta el relleno (padding) de los botones */
+  border: 2px solid #ffffff; /* Agrega un borde */
+  background-color: #333; /* Color de fondo */
+  color: #fff; /* Color del texto */
+  border-radius: 5px; /* Borde redondeado */
+}
+
+#pastel-button:hover {
+  background-color: #0e1115; /* Cambia el color de fondo al pasar el cursor */
+}
+
+#rebaja-button {
+  padding: 10px 20px; /* Ajusta el relleno (padding) de los botones */
+  border: 2px solid #ffffff; /* Agrega un borde */
+  background-color: #333; /* Color de fondo */
+  color: #fff; /* Color del texto */
+  border-radius: 5px; /* Borde redondeado */
+}
+
+#rejaba-button:hover {
+  background-color: #0e1115; /* Cambia el color de fondo al pasar el cursor */
+}
+
+.modal {
+  display: none;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+  text-align: center;
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 0; /* Quita el margen superior para centrar verticalmente */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Estilos para el formulario */
+.formulario {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formulario label {
+  font-weight: bold;
+}
+
+.formulario input, .formulario select {
+  margin: 5px 0;
+  padding: 5px;
+  width: 100%;
+}
+
+.formulario button {
+  margin: 10px 0;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}

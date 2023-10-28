@@ -1,0 +1,162 @@
+.pasteles-container {
+    display: flex; /* Utiliza un contenedor flexible para alinear en fila */
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan a la siguiente línea si no caben */
+    justify-content: space-around; /* Distribuye los elementos en la fila */
+    border-radius: 10px; /* Bordes redondeados */
+  }
+  
+.pastel {
+  width: 200px;
+  margin: 10px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+  
+.pastel img {
+  max-width: 100%;
+}
+
+.familia-buttons {
+  text-align: center; /* Centra los botones horizontalmente */
+}
+
+.familia-button {
+  margin: 10px; /* Agrega margen alrededor de los botones */
+}
+
+/* Estilos personalizados para los botones */
+.familia-button {
+  padding: 10px 20px; /* Ajusta el relleno (padding) de los botones */
+  border: 2px solid #ffffff; /* Agrega un borde */
+  background-color: #333; /* Color de fondo */
+  color: #fff; /* Color del texto */
+  border-radius: 5px; /* Borde redondeado */
+}
+
+.familia-button:hover {
+  background-color: #0e1115; /* Cambia el color de fondo al pasar el cursor */
+}
+
+#descripcion-container, #ingredientes-container {
+  display: none;
+  position: fixed; /* Fija el recuadro en la pantalla */
+  top: 50%; /* Lo coloca en la mitad superior de la pantalla */
+  left: 50%; /* Lo coloca en el centro horizontal de la pantalla */
+  transform: translate(-50%, -50%); /* Centra el recuadro verticalmente y horizontalmente */
+  background-color: white; /* Fondo blanco */
+  border: 2px solid #333; /* Borde de 2 píxeles sólido de color gris */
+  padding: 10px; /* Espacio interno */
+  max-width: 80%; /* Ancho máximo del recuadro */
+}
+
+#descripcion-box, #ingredientes-box {
+  text-align: center; /* Centra el contenido del recuadro */
+}
+
+#cerrar-descripcion, #cerrar-ingredientes {
+  display: block;
+  margin-top: 10px;
+  text-align: center;
+}
+
+
+/* Estilos personalizados para los botones */
+.descripcion-button {
+  padding: 10px 20px; /* Ajusta el relleno (padding) de los botones */
+  border: 2px solid #ffffff; /* Agrega un borde */
+  background-color: #333; /* Color de fondo */
+  color: #fff; /* Color del texto */
+  border-radius: 5px; /* Borde redondeado */
+}
+
+.descripcion-button:hover {
+  background-color: #0e1115; /* Cambia el color de fondo al pasar el cursor */
+}
+
+
+/* Estilos personalizados para los botones */
+.ingredientes-button {
+  padding: 10px 20px; /* Ajusta el relleno (padding) de los botones */
+  border: 2px solid #ffffff; /* Agrega un borde */
+  background-color: #333; /* Color de fondo */
+  color: #fff; /* Color del texto */
+  border-radius: 5px; /* Borde redondeado */
+}
+
+.ingredientes-button:hover {
+  background-color: #0e1115; /* Cambia el color de fondo al pasar el cursor */
+}
+
+/* Estilos personalizados para los botones */
+#pedido-button {
+  padding: 10px 20px; /* Ajusta el relleno (padding) de los botones */
+  border: 2px solid #ffffff; /* Agrega un borde */
+  background-color: #333; /* Color de fondo */
+  color: #fff; /* Color del texto */
+  border-radius: 5px; /* Borde redondeado */
+}
+
+#pedido-button:hover {
+  background-color: #0e1115; /* Cambia el color de fondo al pasar el cursor */
+}
+
+
+.modal {
+  display: none;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+  text-align: center;
+}
+
+
+.modal-content {
+  background-color: #fff;
+  margin: 0; /* Quita el margen superior para centrar verticalmente */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Estilos para el formulario */
+.formulario {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formulario label {
+  font-weight: bold;
+}
+
+.formulario input, .formulario select {
+  margin: 5px 0;
+  padding: 5px;
+  width: 100%;
+}
+
+.formulario button {
+  margin: 10px 0;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
